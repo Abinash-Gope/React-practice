@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const Form = ({ setUsers, setToggle }) => {
+const Form = ({ setUsers, setToggle, editingUser, setEditingUser }) => {
   let {
     register,
     handleSubmit,
@@ -9,18 +9,29 @@ const Form = ({ setUsers, setToggle }) => {
     formState: { errors },
   } = useForm({
     mode: "onChange",
+    values: editingUser || { name: "", email: "", mobile: "", image: "" },
   });
 
   let formSubmit = (data) => {
-    console.log(data);
-    setUsers((prev) => [...prev, data]);
+    if (editingUser) {
+      // 3. UPDATE MODE: Replace the old user data using a unique identifier (like id or email)
+      setUsers((prev) =>
+        prev.map((user) => (user.email === editingUser.email ? data : user))
+      );
+      setEditingUser(null); // Clear editing state after update
+    } else {
+      // 4. CREATE MODE: Append new user
+      setUsers((prev) => [...prev, data]);
+    }
     reset();
     setToggle((prev) => !prev);
   };
 
   return (
     <div className="flex flex-col gap-3 items-center">
-      <h1 className="text-xl font-semibold">Create user</h1>
+      <h1 className="text-xl font-semibold">
+        {editingUser ? "Update User" : "Create User"}
+      </h1>
       <form
         onSubmit={handleSubmit(formSubmit)}
         action=""
@@ -46,6 +57,8 @@ const Form = ({ setUsers, setToggle }) => {
           className="p-2 rounded outline-0 border border-black"
           type="email"
           placeholder="Email"
+          // Disable email field during updates if it serves as your primary key
+          disabled={!!editingUser} 
         />
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
         <input
@@ -77,8 +90,21 @@ const Form = ({ setUsers, setToggle }) => {
         />
         {errors.image && <p className="text-red-500">{errors.image.message}</p>}
         <button className="text-black bg-blue-700 p-2 rounded-xl cursor-pointer">
-          Add user
+          {editingUser ? "Update User" : "Add User"}
         </button>
+
+        {editingUser && (
+          <button
+            type="button"
+            onClick={() => {
+              setEditingUser(null);
+              reset();
+            }}
+            className="text-black bg-gray-300 p-2 rounded-xl cursor-pointer"
+          >
+            Cancel
+          </button>
+        )}
       </form>
     </div>
   );
