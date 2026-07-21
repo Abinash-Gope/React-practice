@@ -33,6 +33,7 @@ const App = () => {
           <Form 
             setUsers={setUsers} 
             setToggle={setToggle}
+            users={users}
             editingUser={editingUser}
             setEditingUser={setEditingUser}
           />

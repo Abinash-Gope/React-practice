@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const Form = ({ setUsers, setToggle, editingUser, setEditingUser }) => {
+const Form = ({ setUsers, setToggle, users, editingUser, setEditingUser }) => {
   let {
     register,
     handleSubmit,
@@ -22,6 +22,7 @@ const Form = ({ setUsers, setToggle, editingUser, setEditingUser }) => {
     } else {
       // 4. CREATE MODE: Append new user
       setUsers((prev) => [...prev, data]);
+      localStorage.setItem("users", JSON.stringify(users));
     }
     reset();
     setToggle((prev) => !prev);
