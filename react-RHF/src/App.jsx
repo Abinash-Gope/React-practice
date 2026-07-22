@@ -9,8 +9,6 @@ const App = () => {
     return JSON.parse(localStorage.getItem("users")) || [];
   });
 
-  const [updatedData, setUpdatedData] = useState(null)
-
   const handleDelete = (id) => {
     let filterUser = users.filter((val, index) => {
       return index !== id;
@@ -20,7 +18,6 @@ const App = () => {
     localStorage.setItem("users", JSON.stringify());
   };
   
-  // 1. Add the state to track which user is being updated
   const [editingUser, setEditingUser] = useState(null);
 
   return (
@@ -28,13 +25,11 @@ const App = () => {
       <Navbar setToggle={setToggle} />
       {toggle ? (
         <div className="flex gap-4 flex-wrap">
-          {users.map((elem, index) => {
+          {users.map((elem) => {
             return (
               <Usercard 
-                ind={index}
-                key={index} 
+                key={elem.id} 
                 users={elem} 
-                setUpdatedData={setUpdatedData}
                 setToggle={setToggle} 
                 handleDelete={handleDelete}
                 setEditingUser={setEditingUser} 

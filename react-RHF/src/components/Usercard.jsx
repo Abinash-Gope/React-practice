@@ -1,7 +1,7 @@
 import React from "react";
 
 // 1. Destructure setEditingUser and setUsers from props
-const Usercard = ({ users, setToggle, setUsers, handleDelete, ind, setUpdatedData}) => {
+const Usercard = ({ users, setToggle, setUsers, handleDelete, setEditingUser}) => {
   
 
   return (
@@ -23,7 +23,7 @@ const Usercard = ({ users, setToggle, setUsers, handleDelete, ind, setUpdatedDat
         {/* 4. Attached the handleUpdate function */}
         <button 
           onClick={() => {
-            setUpdatedData(user)
+            setEditingUser(users)
             setToggle((prev) => !prev);
           }} 
           className="bg-yellow-700 text-white py-2 px-3 cursor-pointer rounded hover:bg-yellow-600 transition"
@@ -32,7 +32,7 @@ const Usercard = ({ users, setToggle, setUsers, handleDelete, ind, setUpdatedDat
         </button>
         {/* 5. Attached the handleDelete function */}
         <button 
-          onClick={() => handleDelete(ind)}
+          onClick={() => handleDelete(users.id)}
           className="bg-red-700 text-white py-2 px-3 cursor-pointer rounded hover:bg-red-600 transition"
         >
           Delete

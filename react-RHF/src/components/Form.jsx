@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { nanoid } from "nanoid";
 
 const Form = ({ setUsers, setToggle, users, editingUser, setEditingUser }) => {
   let {
@@ -14,14 +15,11 @@ const Form = ({ setUsers, setToggle, users, editingUser, setEditingUser }) => {
 
   let formSubmit = (data) => {
     if (editingUser) {
-      // 3. UPDATE MODE: Replace the old user data using a unique identifier (like id or email)
       setUsers((prev) =>
-        prev.map((user) => (user.email === editingUser.email ? data : user))
+        prev.map((user) => (user.id === editingUser.id ? {...data} : user))
       );
-      setEditingUser(null); // Clear editing state after update
-    } else {
-      // 4. CREATE MODE: Append new user
-      let arr = [...users, data];
+      setEditingUser(null);
+      let arr = [...users, {...data, id: nanoid()}];
       setUsers(arr);
       localStorage.setItem("users", JSON.stringify(arr));
     }
