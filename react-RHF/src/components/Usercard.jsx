@@ -1,18 +1,8 @@
 import React from "react";
 
 // 1. Destructure setEditingUser and setUsers from props
-const Usercard = ({ users, setToggle, setEditingUser, setUsers }) => {
+const Usercard = ({ users, setToggle, setUsers, handleDelete, ind, setUpdatedData}) => {
   
-  // 2. Handle update button click
-  const handleUpdate = () => {
-    setEditingUser(users); // Set this specific user data into state
-    setToggle(false);      // Switch view to open the Form
-  };
-
-  // 3. Handle delete button click (filters user out by email)
-  const handleDelete = () => {
-    setUsers((prev) => prev.filter((user) => user.email !== users.email));
-  };
 
   return (
     <div className="p-4 border bg-black rounded flex flex-col gap-2">
@@ -32,14 +22,17 @@ const Usercard = ({ users, setToggle, setEditingUser, setUsers }) => {
       <div className="flex w-full justify-between gap-4">
         {/* 4. Attached the handleUpdate function */}
         <button 
-          onClick={handleUpdate} 
+          onClick={() => {
+            setUpdatedData(user)
+            setToggle((prev) => !prev);
+          }} 
           className="bg-yellow-700 text-white py-2 px-3 cursor-pointer rounded hover:bg-yellow-600 transition"
         >
           Update
         </button>
         {/* 5. Attached the handleDelete function */}
         <button 
-          onClick={handleDelete}
+          onClick={() => handleDelete(ind)}
           className="bg-red-700 text-white py-2 px-3 cursor-pointer rounded hover:bg-red-600 transition"
         >
           Delete

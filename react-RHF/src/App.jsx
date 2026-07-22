@@ -5,7 +5,20 @@ import Form from "./components/Form";
 
 const App = () => {
   const [toggle, setToggle] = useState(true);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(() => {
+    return JSON.parse(localStorage.getItem("users")) || [];
+  });
+
+  const [updatedData, setUpdatedData] = useState(null)
+
+  const handleDelete = (id) => {
+    let filterUser = users.filter((val, index) => {
+      return index !== id;
+    });
+    console.log(filterUser)
+    setUsers(filterUser);
+    localStorage.setItem("users", JSON.stringify());
+  };
   
   // 1. Add the state to track which user is being updated
   const [editingUser, setEditingUser] = useState(null);
@@ -18,9 +31,12 @@ const App = () => {
           {users.map((elem, index) => {
             return (
               <Usercard 
+                ind={index}
                 key={index} 
                 users={elem} 
+                setUpdatedData={setUpdatedData}
                 setToggle={setToggle} 
+                handleDelete={handleDelete}
                 setEditingUser={setEditingUser} 
                 setUsers={setUsers}
               />

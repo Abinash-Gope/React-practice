@@ -21,8 +21,9 @@ const Form = ({ setUsers, setToggle, users, editingUser, setEditingUser }) => {
       setEditingUser(null); // Clear editing state after update
     } else {
       // 4. CREATE MODE: Append new user
-      setUsers((prev) => [...prev, data]);
-      localStorage.setItem("users", JSON.stringify(users));
+      let arr = [...users, data];
+      setUsers(arr);
+      localStorage.setItem("users", JSON.stringify(arr));
     }
     reset();
     setToggle((prev) => !prev);
