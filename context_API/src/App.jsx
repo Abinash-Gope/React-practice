@@ -279,7 +279,7 @@ const App = () => {
   return (
     <div className="h-screen p-4 flex flex-col gap-4">
       <Navbar />
-      <div>
+      <div className="grid grid-cols-5 gap-4">
         {
           products.map((val)=>{
             return <ProductCard product={val}/>;
