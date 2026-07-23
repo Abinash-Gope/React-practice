@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./components/Navbar";
+import ProductCard from "./components/ProductCard";
 
 const App = () => {
   let products = [
@@ -278,6 +279,13 @@ const App = () => {
   return (
     <div className="h-screen p-4 flex flex-col gap-4">
       <Navbar />
+      <div>
+        {
+          products.map((val)=>{
+            return <ProductCard product={val}/>;
+          })
+        }
+      </div>
     </div>
   );
 };
