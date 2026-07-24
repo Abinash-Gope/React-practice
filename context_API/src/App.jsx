@@ -288,7 +288,7 @@ const App = () => {
       {isCartOpen ? (
         <div>
           {" "}
-          <Cart />{" "}
+          <Cart cartItems={cartItems} />{" "}
         </div>
       ) : (
         <div className="grid grid-cols-5 gap-4">
