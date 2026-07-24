@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
+import Cart from "./components/Cart";
 
 const App = () => {
+
+  
+
   let products = [
     {
       id: 1,
@@ -279,13 +283,19 @@ const App = () => {
   return (
     <div className="h-screen p-4 flex flex-col gap-4">
       <Navbar />
-      <div className="grid grid-cols-5 gap-4">
-        {
-          products.map((val)=>{
-            return <ProductCard product={val}/>;
-          })
-        }
-      </div>
+
+      {true ? (
+        <div>
+          {" "}
+          <Cart />{" "}
+        </div>
+      ) : (
+        <div className="grid grid-cols-5 gap-4">
+          {products.map((val) => {
+            return <ProductCard product={val} />;
+          })}
+        </div>
+      )}
     </div>
   );
 };
