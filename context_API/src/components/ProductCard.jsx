@@ -1,7 +1,7 @@
 import React from 'react'
 import { Star } from "lucide-react";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, setCartItems }) => {
   return (
     <div className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 hover:-translate-y-2">
       {/* Image */}
@@ -48,7 +48,7 @@ const ProductCard = ({ product }) => {
           </span>
         </div>
 
-        <button className="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-medium transition">
+        <button onClick={() => setCartItems(prev => [...prev, product])} className="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-medium transition">
           Add to Cart
         </button>
       </div>
