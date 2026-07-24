@@ -5,9 +5,6 @@ import Cart from "./components/Cart";
 
 const App = () => {
 
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-
   let products = [
     {
       id: 1,
