@@ -5,7 +5,7 @@ import Cart from "./components/Cart";
 
 const App = () => {
 
-  
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   let products = [
     {
@@ -282,9 +282,9 @@ const App = () => {
 
   return (
     <div className="h-screen p-4 flex flex-col gap-4">
-      <Navbar />
+    <Navbar setIsCartOpen={setIsCartOpen} />
 
-      {true ? (
+      {isCartOpen ? (
         <div>
           {" "}
           <Cart />{" "}

@@ -1,12 +1,12 @@
 import React from 'react'
 
-const Navbar = () => {
+const Navbar = ({setIsCartOpen}) => {
   return (
     <div className='h-10 text-white bg-black p-5 rounded flex items-center justify-between'>
       <div>logo</div>
       <div className='flex gap-10 text-xl'>
-        <p>Home</p>
-        <p>Cart</p>
+        <p onClick={() => setIsCartOpen(false)} className='cursor-pointer'>Home</p>
+        <p onClick={() => setIsCartOpen(true)} className='cursor-pointer'>Cart</p>
       </div>
       <button>Login</button>
     </div>
