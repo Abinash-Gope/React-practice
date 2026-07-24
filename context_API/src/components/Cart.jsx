@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { MyShop } from "../context/MyWebsite";
 
-const Cart = ({ cartItems }) => {
+const Cart = () => {
+
+  let {cartItems} = useContext(MyShop);
+
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * (item.quantity || 1),
     0
