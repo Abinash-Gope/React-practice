@@ -3,15 +3,18 @@ import Home from "./components/Home";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import { MyStore } from "./context/MyContext";
+import axios from "axios";
 
 const App = () => {
+  let { count, setCount } = useContext(MyStore);
+  const [toggle, setToggle] = useState(true);
 
-  useEffect(() => {
-    console.log("App rendering...");
-  }, [])
+  let getData = async () => {
+    let res = await axios.get("https://fakestoreapi.com/products");
+    console.log(res);
+  };
 
-  let {count, setCount} = useContext(MyStore);
-  const [toggle, setToggle] = useState(true)
+  getData();
 
   return (
     <div>
@@ -19,11 +22,7 @@ const App = () => {
       <button onClick={() => setCount(count + 1)}>Increment</button>
       <button onClick={() => setToggle((prev) => !prev)}>Change toggle</button>
       <Home />
-      {
-        toggle ? <Contact /> : <About />
-      }
-      
-      
+      {toggle ? <Contact /> : <About />}
     </div>
   );
 };
