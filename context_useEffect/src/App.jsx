@@ -11,14 +11,19 @@ const App = () => {
   }, [])
 
   let {count, setCount} = useContext(MyStore);
+  const [toggle, setToggle] = useState(true)
 
   return (
     <div>
       <h1>Hello - {count}</h1>
       <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setToggle((prev) => !prev)}>Change toggle</button>
       <Home />
-      <About />
-      <Contact />
+      {
+        toggle ? <Contact /> : <About />
+      }
+      
+      
     </div>
   );
 };
