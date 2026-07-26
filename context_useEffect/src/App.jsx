@@ -1,11 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Home from "./components/Home";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import { MyStore } from "./context/MyContext";
 
 const App = () => {
-  console.log("App rendering...");
+
+  useEffect(() => {
+    console.log("App rendering...");
+  }, [])
 
   let {count, setCount} = useContext(MyStore);
 
