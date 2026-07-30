@@ -1,9 +1,12 @@
 import React from "react";
+import CartCard from "../components/CartCard";
 
-const CartScreen = () => {
+const CartScreen = ({ cartItems }) => {
   return (
-    <div className="h-screen">
-      <h1>This is cart section</h1>
+    <div className="h-screen text-6xl">
+      {cartItems.map((elem) => {
+        return <CartCard key={elem.id} item={elem}/>;
+      })}
     </div>
   );
 };

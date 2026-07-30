@@ -6,8 +6,9 @@ import CartScreen from "./pages/CartScreen";
 
 const App = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
-
   const [productsData, setProductsData] = useState([]);
+  const [cartItems, setCartItem] = useState([]);
+
   const getProductsData = async () => {
     try {
       let res = await axios.get("https://fakestoreapi.com/products");
@@ -23,16 +24,16 @@ const App = () => {
 
   return (
     <div className="h-screen p-2 flex flex-col gap-4">
-      <Navbar setIsCartOpen={setIsCartOpen}/>
+      <Navbar setIsCartOpen={setIsCartOpen} />
 
       {isCartOpen ? (
         <div>
-          <CartScreen />
+          <CartScreen cartItems={cartItems} />
         </div>
       ) : (
         <div className="grid grid-cols-4 gap-4">
           {productsData.map((elem) => {
-            return <ProductCards key={elem.id} product={elem} />;
+            return <ProductCards key={elem.id} product={elem} setCartItem={setCartItem}/>;
           })}
         </div>
       )}
