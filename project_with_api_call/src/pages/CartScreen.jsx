@@ -1,6 +1,6 @@
 import React from "react";
 
-const CartScreen = ({ setIsCartOpen }) => {
+const CartScreen = () => {
   return (
     <div className="h-screen">
       <h1>This is cart section</h1>
