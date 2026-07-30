@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import ProductCards from "./components/ProductCards";
 
@@ -15,13 +15,21 @@ const App = () => {
     }
   };
 
-getProductsData();
+  useEffect(() => {
+    getProductsData();
+  }, []);
 
   return (
-    <div>
+    <div className="h-screen p-2 flex flex-col gap-4">
       <Navbar />
 
-      <ProductCards />
+    <div className="grid grid-cols-4 gap-4">
+      {
+        productsData.map((elem) => {
+          return <ProductCards key={elem.id} product={elem}/>
+        })
+      }
+    </div>
     </div>
   );
 };
