@@ -1,6 +1,10 @@
 import React, { useContext } from "react";
+import { MyStore } from "../context/MyContext";
 
-const Navbar = ({ setIsCartOpen }) => {
+const Navbar = () => {
+
+  let {setIsCartOpen} = useContext(MyStore)
+
   return (
     <div className="h-10 text-white bg-black p-5 rounded flex items-center justify-between">
       <div>logo</div>
