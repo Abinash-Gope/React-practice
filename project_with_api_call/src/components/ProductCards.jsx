@@ -1,15 +1,14 @@
 import React, { useContext } from "react";
-import { Star, ShoppingCart } from "lucide-react";
+import { Star, ShoppingCart, Minus, Plus } from "lucide-react";
 import { MyStore } from "../context/MyContext";
 
-export default function ProductCard({ product }) {
-
-  let {setCartItem} = useContext(MyStore);
+export default function ProductCard({ product, isInCart }) {
+  let { setCartItem } = useContext(MyStore);
 
   const addToCart = () => {
     setCartItem((prev) => [...prev, product]);
-    alert("Product added into cart")
-  }
+    alert("Product added into cart");
+  };
 
   return (
     <div className="max-w-sm rounded-2xl overflow-hidden border border-gray-200 bg-white shadow-md hover:shadow-xl transition duration-300">
@@ -55,14 +54,29 @@ export default function ProductCard({ product }) {
           <span className="text-2xl font-bold text-green-600">
             ${product.price}
           </span>
+          {isInCart ? (
+            <div className="flex items-center rounded-xl border border-gray-200 bg-gray-50">
+              <button className="rounded-l-xl p-2 hover:bg-gray-200 transition">
+                <Minus size={18} />
+              </button>
 
-          <button
-            onClick={addToCart}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
-          >
-            <ShoppingCart size={18} />
-            Add to Cart
-          </button>
+              <span className="min-w-[40px] text-center text-lg font-bold text-gray-900 font-semibold">
+                1
+              </span>
+
+              <button className="rounded-r-xl p-2 hover:bg-gray-200 transition">
+                <Plus size={18} />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={addToCart}
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+            >
+              <ShoppingCart size={18} />
+              Add to Cart
+            </button>
+          )}
         </div>
       </div>
     </div>
