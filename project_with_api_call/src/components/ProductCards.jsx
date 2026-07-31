@@ -6,7 +6,7 @@ export default function ProductCard({ product, isInCart }) {
   let { setCartItem } = useContext(MyStore);
 
   const addToCart = () => {
-    setCartItem((prev) => [...prev, product]);
+    setCartItem((prev) => [...prev, {...product, qunatity: 1}]);
     alert("Product added into cart");
   };
 

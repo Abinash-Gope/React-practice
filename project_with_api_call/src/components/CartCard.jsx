@@ -40,7 +40,7 @@ const CartCard = ({ item, onIncrease, onDecrease, onRemove }) => {
           </button>
 
           <span className="min-w-[40px] text-center text-lg font-bold text-gray-900 font-semibold">
-            {item.quantity || 1}
+            {item.quantity}
           </span>
 
           <button
