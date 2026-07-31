@@ -3,7 +3,8 @@ import { Star, ShoppingCart, Minus, Plus } from "lucide-react";
 import { MyStore } from "../context/MyContext";
 
 export default function ProductCard({ product, isInCart }) {
-  let { setCartItem, incrementQuantity, decrementQuantity } = useContext(MyStore);
+  let { setCartItem, incrementQuantity, decrementQuantity } =
+    useContext(MyStore);
 
   const addToCart = () => {
     setCartItem((prev) => {
@@ -11,7 +12,9 @@ export default function ProductCard({ product, isInCart }) {
 
       if (exists) {
         return prev.map((item) =>
-          item.id === product.id ? { ...item, qunatity: item.qunatity + 1 } : item
+          item.id === product.id
+            ? { ...item, qunatity: item.qunatity + 1 }
+            : item,
         );
       }
 
@@ -65,9 +68,12 @@ export default function ProductCard({ product, isInCart }) {
           <span className="text-2xl font-bold text-green-600">
             ${product.price}
           </span>
-          {isInCart ? (
+          {isInCart?.qunatity > 0 ? (
             <div className="flex items-center rounded-xl border border-gray-200 bg-gray-50">
-              <button onClick={() => decrementQuantity(product.id)} className="rounded-l-xl p-2 hover:bg-gray-200 transition">
+              <button
+                onClick={() => decrementQuantity(product.id)}
+                className="rounded-l-xl p-2 hover:bg-gray-200 transition"
+              >
                 <Minus size={18} />
               </button>
 
