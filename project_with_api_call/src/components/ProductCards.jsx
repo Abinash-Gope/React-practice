@@ -3,10 +3,21 @@ import { Star, ShoppingCart, Minus, Plus } from "lucide-react";
 import { MyStore } from "../context/MyContext";
 
 export default function ProductCard({ product, isInCart }) {
-  let { setCartItem } = useContext(MyStore);
+  let { setCartItem, incrementQuantity, decrementQuantity } = useContext(MyStore);
 
   const addToCart = () => {
-    setCartItem((prev) => [...prev, {...product, qunatity: 1}]);
+    setCartItem((prev) => {
+      const exists = prev.some((item) => item.id === product.id);
+
+      if (exists) {
+        return prev.map((item) =>
+          item.id === product.id ? { ...item, qunatity: item.qunatity + 1 } : item
+        );
+      }
+
+      return [...prev, { ...product, qunatity: 1 }];
+    });
+
     alert("Product added into cart");
   };
 
@@ -56,15 +67,18 @@ export default function ProductCard({ product, isInCart }) {
           </span>
           {isInCart ? (
             <div className="flex items-center rounded-xl border border-gray-200 bg-gray-50">
-              <button className="rounded-l-xl p-2 hover:bg-gray-200 transition">
+              <button onClick={() => decrementQuantity(product.id)} className="rounded-l-xl p-2 hover:bg-gray-200 transition">
                 <Minus size={18} />
               </button>
 
               <span className="min-w-[40px] text-center text-lg font-bold text-gray-900 font-semibold">
-                1
+                {isInCart.qunatity}
               </span>
 
-              <button className="rounded-r-xl p-2 hover:bg-gray-200 transition">
+              <button
+                onClick={() => incrementQuantity(product.id)}
+                className="rounded-r-xl p-2 hover:bg-gray-200 transition"
+              >
                 <Plus size={18} />
               </button>
             </div>
