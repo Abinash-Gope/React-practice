@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import { Route, Routes } from "react-router";
 
 const App = () => {
   const [toggle, setToggle] = useState("Home");
@@ -11,23 +12,19 @@ const App = () => {
       <nav className="flex items-center justify-between mb-4">
         <h1>Logo</h1>
         <div className="flex gap-10 items-center justify-between">
-          <p className="cursor-pointer" onClick={() => setToggle("home")}>
-            Home
-          </p>
-          <p className="cursor-pointer" onClick={() => setToggle("about")}>
-            About
-          </p>
-          <p className="cursor-pointer" onClick={() => setToggle("contact")}>
-            Contact
-          </p>
+          <p>Home</p>
+          <p>About</p>
+          <p>Contact</p>
         </div>
         <button>Login</button>
       </nav>
 
       <div>
-        {toggle === "home" && <Home />}
-        {toggle === "about" && <About />}
-        {toggle === "contact" && <Contact />}
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/about" element={<About />}/>
+          <Route path="/contact" element={<Contact />}/>
+        </Routes>
       </div>
     </div>
   );
