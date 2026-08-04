@@ -1,23 +1,28 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { MyStore } from "../context/MyContext";
+import ProductsCard from "../components/ProductsCard";
 
 const Home = () => {
   let { productsData, setProductsData } = useContext(MyStore);
   let getProductsData = async () => {
     try {
       let res = await axios.get("https://fakestoreapi.com/products");
-      console.log(res);
+      setProductsData(res.data);
     } catch (error) {
       console.log("error in api", error);
     }
   };
 
-  getProductsData();
+  useEffect(() => {
+    getProductsData();
+  }, []);
 
   return (
-    <div>
-      <h1>Home pages</h1>
+    <div className="p-2 grid grid-cols-4 gap-4">
+      {productsData.map((val) => {
+        return <ProductsCard key={val.id} product={val}/>;
+      })}
     </div>
   );
 };
