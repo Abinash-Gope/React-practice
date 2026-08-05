@@ -1,11 +1,17 @@
 import { Star } from "lucide-react";
 import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const ProductsCard = ({ product }) => {
+  let navigate = useNavigate();
+
   return (
     <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border">
       {/* Product Image */}
-      <div className="h-64 bg-gray-100 flex items-center justify-center p-6">
+      <div
+        onClick={() => navigate(`/detail/${product.id}`)}
+        className="h-64 bg-gray-100 flex items-center justify-center p-6"
+      >
         <img
           src={product.image}
           alt={product.title}
