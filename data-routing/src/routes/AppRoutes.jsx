@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import About from "../pages/About";
 import Services from "../pages/Services";
 import MainLayout from "../layout/MainLayout";
+import AuthLayout from "../layout/AuthLayout";
 
 const AppRoutes = () => {
   let router = createBrowserRouter([
@@ -25,6 +26,10 @@ const AppRoutes = () => {
         },
       ],
     },
+    {
+        path:"/auth",
+        element:<AuthLayout />
+    }
   ]);
 
   return <RouterProvider router={router} />;
