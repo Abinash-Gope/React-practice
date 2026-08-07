@@ -9,15 +9,17 @@ const AppRoutes = () => {
     {
       path: "/",
       element: <Home />,
-    },
-    {
-      path: "/about",
+      children:[
+        {
+      path: "about",
       element: <About />,
     },
     {
-      path: "/services",
+      path: "services",
       element: <Services />,
-    },
+    }
+      ]
+    }
   ]);
 
   return <RouterProvider router={router} />;

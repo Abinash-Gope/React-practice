@@ -1,11 +1,15 @@
-import React from 'react'
+import React from "react";
+import Navbar from "../components/Navbar";
+import { Outlet } from "react-router";
 
 const Home = () => {
   return (
     <div>
+      <Navbar />
       <h1>This is Home page</h1>
+      <Outlet />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
