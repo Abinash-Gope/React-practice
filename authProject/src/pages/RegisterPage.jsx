@@ -1,20 +1,21 @@
-import React, { use } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 const RegisterPage = () => {
+  let navigate = useNavigate();
   let {
-    Register,
+    register,
     handleSubmit,
     reset,
-    formState: { error },
+    watch,
+    formState: { errors },
   } = useForm();
 
-  let navigate = useNavigate();
-
   let formSubmit = (data) => {
-
-  }
+    console.log(data);
+    reset();
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
@@ -37,14 +38,17 @@ const RegisterPage = () => {
             </label>
 
             <input
-            {...Register("name", {
-                required: "Name is Required"
-            })}
+              {...register("name", {
+                required: "Name is Required",
+              })}
               id="name"
               type="text"
               placeholder="Enter your name"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             />
+            {errors.name && (
+              <p className="text-red-700 text-sm mt-1">{errors.name.message}</p>
+            )}
           </div>
 
           {/* Email */}
@@ -57,14 +61,19 @@ const RegisterPage = () => {
             </label>
 
             <input
-            {...Register("email", {
-                required: "email is Required"
-            })}
+              {...register("email", {
+                required: "email is Required",
+              })}
               id="email"
               type="email"
               placeholder="Enter your email"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             />
+            {errors.email && (
+              <p className="text-red-700 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           {/* Password */}
@@ -77,18 +86,23 @@ const RegisterPage = () => {
             </label>
 
             <input
-            {...Register("password", {
+              {...register("password", {
                 required: "password is Required",
-                minLength:{
-                    value:6,
-                    message:"Minimum 6 characters is required"
-                }
-            })}
+                minLength: {
+                  value: 6,
+                  message: "Minimum 6 characters is required",
+                },
+              })}
               id="password"
               type="password"
               placeholder="Create a password"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             />
+            {errors.password && (
+              <p className="text-red-700 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* Confirm Password */}
@@ -101,11 +115,21 @@ const RegisterPage = () => {
             </label>
 
             <input
+              {...register("confirmPassword", {
+                required: "Confirm password is Required",
+                validate: (value) =>
+                  value === watch("password") || "Passwords do not match",
+              })}
               id="confirmPassword"
               type="password"
               placeholder="Confirm your password"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             />
+            {errors.confirmPassword && (
+              <p className="text-red-700 text-sm mt-1">
+                {errors.confirmPassword.message}
+              </p>
+            )}
           </div>
 
           {/* Register Button */}

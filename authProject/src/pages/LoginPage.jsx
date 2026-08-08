@@ -1,8 +1,21 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
 const LoginPage = () => {
   let navigate = useNavigate();
+
+  let {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  let formSubmit = (data) => {
+    console.log(data);
+    reset();
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
@@ -14,7 +27,7 @@ const LoginPage = () => {
         </div>
 
         {/* Login Form */}
-        <form className="space-y-5">
+        <form onSubmit={handleSubmit(formSubmit)} className="space-y-5">
           {/* Email */}
           <div>
             <label
@@ -25,11 +38,15 @@ const LoginPage = () => {
             </label>
 
             <input
+              {...register("email", {
+                required: "Email is Required",
+              })}
               id="email"
               type="email"
               placeholder="Enter your email"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             />
+            {errors.email && <p className="text-red-700 text-sm mt-1">{errors.email.message}</p>}
           </div>
 
           {/* Password */}
@@ -42,11 +59,19 @@ const LoginPage = () => {
             </label>
 
             <input
+              {...register("password", {
+                required: "Password is Required",
+                minLength: {
+                  value: 6,
+                  message: "Minimum 6 characters is required",
+                },
+              })}
               id="password"
               type="password"
               placeholder="Enter your password"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             />
+            {errors.password && <p className="text-red-700 text-sm mt-1">{errors.password.message}</p>}
           </div>
 
           {/* Forgot Password */}
