@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { data, useNavigate } from "react-router";
+import { Auth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
+  const { registeredUser, loggedInUser, setLoggedInUser } = useContext(Auth);
+
   let navigate = useNavigate();
 
   let {
@@ -13,7 +17,19 @@ const LoginPage = () => {
   } = useForm();
 
   let formSubmit = (data) => {
-    console.log(data);
+    let user = registeredUser.find((val) => {
+      return val.email === data.email && val.password === data.password;
+    });
+
+    if (!user) {
+      toast.error("user not found or invalid credentials");
+      return;
+    }
+
+    setLoggedInUser(user);
+    localStorage.setItem("loggedinUser", JSON.stringify(user));
+    toast.success("User loggedin")
+    navigate("/main");
     reset();
   };
 
@@ -46,7 +62,11 @@ const LoginPage = () => {
               placeholder="Enter your email"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             />
-            {errors.email && <p className="text-red-700 text-sm mt-1">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-red-700 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           {/* Password */}
@@ -71,7 +91,11 @@ const LoginPage = () => {
               placeholder="Enter your password"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             />
-            {errors.password && <p className="text-red-700 text-sm mt-1">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-red-700 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* Forgot Password */}
