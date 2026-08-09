@@ -5,6 +5,9 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import MainLayout from "../layouts/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
+import HomePage from "../pages/HomePage";
+import AboutPage from "../pages/AboutPage";
+import Contact from "../pages/Contact";
 
 const AppRoutes = () => {
   let router = createBrowserRouter([
@@ -23,12 +26,28 @@ const AppRoutes = () => {
       ],
     },
     {
-        path: "/main",
-        element: <ProtectedRoute />,
-        children: [{
-          path:"",
-          element:<MainLayout />
-        }]
+      path: "/main",
+      element: <ProtectedRoute />,
+      children: [
+        {
+          path: "",
+          element: <MainLayout />,
+          children: [
+            {
+              path: "",
+              element: <HomePage />,
+            },
+            {
+              path: "about",
+              element: <AboutPage />,
+            },
+            {
+              path: "contact",
+              element: <Contact />,
+            },
+          ],
+        },
+      ],
     }
   ]);
 
