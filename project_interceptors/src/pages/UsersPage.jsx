@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import UserCard from "../component/UserCard";
 
 const UsersPage = () => {
 
   const [usersData, setUsersData] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
   let getUsersData = async () => {
     try {
       let res = await axios.get("https://fakestoreapi.com/users");
       console.log(res);
       setUsersData(res.data)
+      setIsLoading(false);
     } catch (error) {
       console.log("error in user api", error);
     }
@@ -18,7 +22,13 @@ const UsersPage = () => {
     getUsersData();
   }, [])
 
-  return <div>UsersPage</div>;
+  if(isLoading) return <h1 className="text-4xl">Loading users...</h1>
+
+  return <div className="grid grid-cols-4 gap-5">
+    {
+      usersData.map((val) => <UserCard key={val.id} user={val}/>)
+    }
+  </div>;
 };
 
 export default UsersPage;
