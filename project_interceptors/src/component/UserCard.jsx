@@ -2,7 +2,7 @@ const UserCard = ({ user }) => {
   return (
     <div className="w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-gray-200">
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-8 text-center">
+      <div className="bg-linear-to-r from-indigo-500 to-purple-600 px-6 py-8 text-center">
         <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-white text-2xl font-bold text-indigo-600 shadow-md">
           {user.name.firstname[0].toUpperCase()}
           {user.name.lastname[0].toUpperCase()}

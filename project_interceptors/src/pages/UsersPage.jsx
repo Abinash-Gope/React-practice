@@ -10,7 +10,6 @@ const UsersPage = () => {
   let getUsersData = async () => {
     try {
       let res = await axios.get("https://fakestoreapi.com/users");
-      console.log(res);
       setUsersData(res.data)
       setIsLoading(false);
     } catch (error) {
