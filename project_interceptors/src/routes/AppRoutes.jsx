@@ -6,23 +6,30 @@ import RegisterPage from "../pages/RegisterPage";
 import MainLayout from "../layouts/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import HomePage from "../pages/HomePage";
-import AboutPage from "../pages/AboutPage";
-import Contact from "../pages/Contact";
+import PublicRoute from "./PublicRoute";
+import UsersPage from "../pages/UsersPage";
+import ProductPage from "../pages/ProductPage";
 
 const AppRoutes = () => {
   let router = createBrowserRouter([
     {
       path: "/",
-      element: <AuthLayout />,
+      element: <PublicRoute />,
       children: [
         {
           path: "",
-          element: <LoginPage />,
+          element: <AuthLayout />,
+          children: [
+            {
+              path: "",
+              element: <LoginPage />,
+            },
+            {
+              path: "register",
+              element: <RegisterPage />,
+            },
+          ],
         },
-        {
-            path:"register",
-            element:<RegisterPage />
-        }
       ],
     },
     {
@@ -38,17 +45,17 @@ const AppRoutes = () => {
               element: <HomePage />,
             },
             {
-              path: "about",
-              element: <AboutPage />,
+              path: "users",
+              element: <UsersPage />,
             },
             {
-              path: "contact",
-              element: <Contact />,
+              path: "products",
+              element: <ProductPage />,
             },
           ],
         },
       ],
-    }
+    },
   ]);
 
   return <RouterProvider router={router} />;

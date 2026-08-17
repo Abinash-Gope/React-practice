@@ -4,9 +4,11 @@ import { Outlet } from "react-router";
 
 const MainPage = () => {
   return (
-    <div>
+    <div className="h-screen p-2 flex grid grid-cols-[1fr_4fr] justify-center gap-5 p-5">
       <Navbar />
-      <Outlet />
+      <div className="h-full p-2">
+        <Outlet />
+      </div>
     </div>
   );
 };
