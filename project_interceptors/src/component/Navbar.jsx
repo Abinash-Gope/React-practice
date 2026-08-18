@@ -1,6 +1,9 @@
 import { NavLink } from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 const Navbar = () => {
+  const { logout } = useAuth();
+
   return (
     <div className="border-r border-gray-500 flex flex-col justify-between p-3">
       <div className="flex flex-col gap-10">
@@ -39,7 +42,10 @@ const Navbar = () => {
           </NavLink>
         </div>
       </div>
-      <button className="p-3 bg-red-500 text-white rounded cursor-pointer">
+      <button
+        onClick={logout}
+        className="p-3 bg-red-500 text-white rounded cursor-pointer"
+      >
         Logout
       </button>
     </div>

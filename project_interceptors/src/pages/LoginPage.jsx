@@ -1,37 +1,10 @@
-import React, { useContext } from "react";
-import { useForm } from "react-hook-form";
-import { data, useNavigate } from "react-router";
-import { Auth } from "../context/AuthContext";
+import React from "react";
 import { toast } from "react-toastify";
+import { useAuth } from "../hooks/useAuth";
 
 const LoginPage = () => {
-  const { registeredUser, loggedInUser, setLoggedInUser } = useContext(Auth);
-
-  let navigate = useNavigate();
-
-  let {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
-
-  let formSubmit = (data) => {
-    let user = registeredUser.find((val) => {
-      return val.email === data.email && val.password === data.password;
-    });
-
-    if (!user) {
-      toast.error("user not found or invalid credentials");
-      return;
-    }
-
-    setLoggedInUser(user);
-    localStorage.setItem("loggedinUser", JSON.stringify(user));
-    toast.success("User loggedin")
-    navigate("/main");
-    reset();
-  };
+  let {register, reset, loginFormSubmit,handleSubmit,navigate, errors} = useAuth();
+  
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
@@ -43,7 +16,7 @@ const LoginPage = () => {
         </div>
 
         {/* Login Form */}
-        <form onSubmit={handleSubmit(formSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(loginFormSubmit)} className="space-y-5">
           {/* Email */}
           <div>
             <label
