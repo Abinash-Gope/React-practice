@@ -6,7 +6,7 @@ const MainPage = () => {
   return (
     <div className="h-screen p-2 flex grid grid-cols-[1fr_4fr] justify-center gap-5 p-5">
       <Navbar />
-      <div className="h-full p-2">
+      <div className="h-full p-2 overflow-auto">
         <Outlet />
       </div>
     </div>
