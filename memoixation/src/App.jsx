@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useState } from "react";
+import Home from "./components/Home";
+import About from "./components/About";
 
 const App = () => {
-  return (
-    <div>App</div>
-  )
-}
+  console.log("App rendering....");
 
-export default App
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <h1>App</h1>
+      <h2>count is {count}</h2>
+      <button
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        Increment
+      </button>
+      <Home />
+      <About />
+    </div>
+  );
+};
+
+export default App;
