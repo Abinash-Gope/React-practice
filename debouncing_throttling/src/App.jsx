@@ -4,6 +4,9 @@ import axios from "axios";
 const App = () => {
   const [searchData, setSearchData] = useState(null);
   const [productsData, setProductsData] = useState([]);
+  const [scrollY, setScrollY] = useState(null);
+
+  let throttle = false;
 
   let getProducts = async () => {
     try {
@@ -21,6 +24,7 @@ const App = () => {
     setProductsData(result);
   };
 
+  //debouncing
   useEffect(() => {
     if (!searchData) return;
 
@@ -28,9 +32,28 @@ const App = () => {
       filterData();
     }, 700);
 
-    return () => clearTimeout(timeOut)
+    return () => clearTimeout(timeOut);
   }, [searchData]);
 
+  //throttling...
+  useEffect(() => {
+    
+
+    let handelScroll = () => {
+      if (throttle) return;
+
+      throttle = true;
+      console.log("scroll triggered...");
+      setScrollY(window.scrollY);
+
+      setTimeout(() => {
+        throttle = false
+      }, 5000)
+    };
+    window.addEventListener("scroll", handelScroll);
+
+    return () => window.removeEventListener("scroll", handelScroll)
+  }, []);
   useEffect(() => {
     getProducts();
   }, []);
