@@ -16,10 +16,15 @@ const App = () => {
 
   let filterData = () => {
     let result = productsData.filter((val) => {
-      return val.title === searchData;
+      return val.title.toLowerCase().includes(searchData.toLowerCase());
     });
-    console.log(result);
+    setProductsData(result);
   };
+
+  useEffect(() => {
+    if (!searchData) return;
+    filterData();
+  }, [searchData]);
 
   useEffect(() => {
     getProducts();
