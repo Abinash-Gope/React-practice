@@ -23,7 +23,12 @@ const App = () => {
 
   useEffect(() => {
     if (!searchData) return;
-    filterData();
+
+    let timeOut = setTimeout(() => {
+      filterData();
+    }, 700);
+
+    return () => clearTimeout(timeOut)
   }, [searchData]);
 
   useEffect(() => {
