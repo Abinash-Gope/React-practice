@@ -1,9 +1,12 @@
-import React from 'react'
+import axios from "axios";
+import React, { useEffect } from "react";
+import { getUsers } from "../apis/usersApi";
 
 const About = () => {
-  return (
-    <div>About</div>
-  )
-}
+  console.log('about chal gaya')
+  let data = getUsers();
 
-export default About
+  return <div>About</div>;
+};
+
+export default About;

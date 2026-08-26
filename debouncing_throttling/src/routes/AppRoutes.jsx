@@ -1,7 +1,8 @@
-import React, { lazy } from "react";
+import React, { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import MainLayout from "../layouts/MainLayout";
 import App from "../App";
+import { getUsers } from "../apis/usersApi";
 let About = lazy(() => import("../pages/About"));
 let Contact = lazy(() => import("../pages/Contact"));
 
@@ -17,7 +18,12 @@ const AppRoutes = () => {
         },
         {
           path: "about",
-          element: <About />,
+          loader: getUsers,
+          element: (
+            <Suspense fallback={<h1>Loading About</h1>}>
+              <About />
+            </Suspense>
+          ),
         },
         {
           path: "contact",
