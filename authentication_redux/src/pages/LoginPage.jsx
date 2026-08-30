@@ -2,14 +2,9 @@ import React, { useState } from "react";
 import { useAuth } from "../hooks/authHooks";
 
 const LoginPage = () => {
-  let {navigate} = useAuth();
+  let { navigate, register, handleSubmit, reset, errors, loginForm } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Login submitted");
-  };
 
   return (
     <div className="h-screen w-full overflow-hidden bg-gray-100">
@@ -17,7 +12,6 @@ const LoginPage = () => {
         <div className="w-full max-w-sm">
           {/* Login Card */}
           <div className="rounded-2xl bg-white p-6 shadow-xl sm:p-7">
-
             {/* Logo */}
             <div className="mb-4 text-center">
               <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-black text-lg font-bold text-white">
@@ -27,9 +21,7 @@ const LoginPage = () => {
 
             {/* Heading */}
             <div className="mb-5 text-center">
-              <h1 className="text-2xl font-bold text-gray-900">
-                Welcome Back
-              </h1>
+              <h1 className="text-2xl font-bold text-gray-900">Welcome Back</h1>
 
               <p className="mt-1 text-sm text-gray-500">
                 Login to your account to continue
@@ -37,8 +29,7 @@ const LoginPage = () => {
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
-
+            <form onSubmit={handleSubmit(loginForm)} className="space-y-4">
               {/* Email */}
               <div>
                 <label
@@ -49,12 +40,18 @@ const LoginPage = () => {
                 </label>
 
                 <input
+                  {...register("email", {
+                    required: "email is required",
+                  })}
                   id="email"
                   type="email"
                   placeholder="Enter your email"
                   required
                   className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-sm outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
                 />
+                {errors.email && (
+                  <p className="text-red-500">{errors.email.message}</p>
+                )}
               </div>
 
               {/* Password */}
@@ -77,12 +74,22 @@ const LoginPage = () => {
 
                 <div className="relative">
                   <input
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: {
+                        value: 8,
+                        message: "Minimum 8 characters are required",
+                      },
+                    })}
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     required
                     className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 pr-16 text-sm outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
                   />
+                  {errors.password && (
+                    <p className="text-red-500">{errors.password.message}</p>
+                  )}
 
                   <button
                     type="button"
@@ -123,9 +130,7 @@ const LoginPage = () => {
             <div className="my-5 flex items-center">
               <div className="h-px flex-1 bg-gray-200" />
 
-              <span className="px-3 text-xs text-gray-400">
-                OR
-              </span>
+              <span className="px-3 text-xs text-gray-400">OR</span>
 
               <div className="h-px flex-1 bg-gray-200" />
             </div>

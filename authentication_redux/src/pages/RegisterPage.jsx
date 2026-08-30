@@ -2,24 +2,18 @@ import React, { useState } from "react";
 import { useAuth } from "../hooks/authHooks";
 
 const RegisterPage = () => {
-  let {navigate} = useAuth();
+  let { navigate, register, handleSubmit, errors, registerForm, watch } =
+    useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Register submitted");
-  };
 
   return (
     <div className="h-screen w-full overflow-hidden bg-gray-100">
       <div className="flex h-full items-center justify-center px-4 py-4">
         <div className="w-full max-w-md">
-
           {/* Register Card */}
           <div className="rounded-2xl bg-white px-6 py-5 shadow-xl sm:px-8">
-
             {/* Logo */}
             <div className="mb-3 flex justify-center">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-lg font-bold text-white">
@@ -39,11 +33,9 @@ const RegisterPage = () => {
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-3">
-
+            <form onSubmit={handleSubmit(registerForm)} className="space-y-3">
               {/* Name + Email */}
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-
                 {/* Full Name */}
                 <div>
                   <label
@@ -54,12 +46,18 @@ const RegisterPage = () => {
                   </label>
 
                   <input
+                    {...register("name", {
+                      required: "name is required",
+                    })}
                     id="name"
                     type="text"
                     placeholder="Full name"
                     required
                     className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
                   />
+                  {errors.name && (
+                    <p className="text-red-500">{errors.name.message}</p>
+                  )}
                 </div>
 
                 {/* Email */}
@@ -72,18 +70,23 @@ const RegisterPage = () => {
                   </label>
 
                   <input
+                    {...register("email", {
+                      required: "email is required",
+                    })}
                     id="email"
                     type="email"
                     placeholder="Email address"
                     required
                     className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
                   />
+                  {errors.email && (
+                    <p className="text-red-500">{errors.email.message}</p>
+                  )}
                 </div>
               </div>
 
               {/* Password + Confirm Password */}
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-
                 {/* Password */}
                 <div>
                   <label
@@ -95,12 +98,22 @@ const RegisterPage = () => {
 
                   <div className="relative">
                     <input
+                      {...register("password", {
+                        required: "Password is required",
+                        minLength: {
+                          value: 8,
+                          message: "Minimum 8 characters are required",
+                        },
+                      })}
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Password"
                       required
                       className="w-full rounded-lg border border-gray-300 px-3 py-2.5 pr-14 text-sm outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
                     />
+                    {errors.password && (
+                      <p className="text-red-500">{errors.password.message}</p>
+                    )}
 
                     <button
                       type="button"
@@ -123,12 +136,23 @@ const RegisterPage = () => {
 
                   <div className="relative">
                     <input
+                      {...register("confirmPassword", {
+                        required: "Confirm Password is required",
+                        validate: (value) =>
+                          value === watch("password") ||
+                          "Passwords do not match",
+                      })}
                       id="confirmPassword"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm password"
                       required
                       className="w-full rounded-lg border border-gray-300 px-3 py-2.5 pr-14 text-sm outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
                     />
+                    {errors.confirmPassword && (
+                      <p className="text-red-500">
+                        {errors.confirmPassword.message}
+                      </p>
+                    )}
 
                     <button
                       type="button"
@@ -186,9 +210,7 @@ const RegisterPage = () => {
             <div className="my-4 flex items-center">
               <div className="h-px flex-1 bg-gray-200" />
 
-              <span className="px-3 text-xs text-gray-400">
-                OR
-              </span>
+              <span className="px-3 text-xs text-gray-400">OR</span>
 
               <div className="h-px flex-1 bg-gray-200" />
             </div>
