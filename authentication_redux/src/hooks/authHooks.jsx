@@ -23,10 +23,10 @@ export const useAuth = () => {
 
   const registerForm = (data) => {
     let arr = [...registeredUsers, data];
-    
+
     setRegisteredUsers(arr);
     localStorage.setItem("registeredUsers", JSON.stringify(arr));
-    toast.success("user registered..")
+    toast.success("user registered..");
   };
   const loginForm = (data) => {
     let user = registeredUsers.find((val) => {
@@ -34,10 +34,12 @@ export const useAuth = () => {
     });
 
     if (!user) {
-      return toast.error("invalid something...");
+      toast.error("invalid something...");
+      return;
     }
 
     dispatch(addUser(user));
+    localStorage.setItem("loggedInUser", JSON.stringify(user))
     toast.success("user logged in");
     reset();
   };
