@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import ProductCard from "../components/ProductCard";
 import ProductSkeleton from "../components/ProductSkeleton";
 import { getProductsDataApi } from "../api/productApi";
+import { useQuery } from "@tanstack/react-query";
 
 const ShopPage = () => {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  let getData = async () => {
-    let data = await getProductsDataApi();
-    setProducts(data);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    getData();
-  }, [])
+  const { data: products = [], isPending } = useQuery({
+    queryKey: ["products"],
+    queryFn: getProductsDataApi,
+  });
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100 p-4 sm:p-8">
@@ -89,11 +81,13 @@ const ShopPage = () => {
 
         {/* Product Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {isLoading
+          {isPending
             ? Array.from({ length: 8 }).map((_, index) => (
-                <ProductSkeleton key={index} />
-              ))
-            : products.map((val) => <ProductCard key={val.id} product={val} />)}
+              <ProductSkeleton key={index} />
+            ))
+            : products.map((val) => (
+              <ProductCard key={val.id} product={val} />
+            ))}
         </div>
       </div>
     </div>
