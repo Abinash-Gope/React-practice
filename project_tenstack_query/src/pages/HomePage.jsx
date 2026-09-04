@@ -17,7 +17,6 @@ const HomePage = () => {
   };
   return (
     <div>
-      <nav>Navbar</nav>
       <div className="bg-red-400 rounded m-2 p-3">
         <h1 className="text-4xl font-mono">Count is {count}</h1>
         <button
