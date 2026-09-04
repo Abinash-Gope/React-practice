@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import ProductSkeleton from "../components/ProductSkeleton";
 import ProductFilter from "../components/ProductFilter";
 import { useProductApi } from "../hooks/productHooks";
 
 const ShopPage = () => {
-  let { data, isPending, error } = useProductApi();
+  const { data, isLoading, error, filterProducts, filteredProducts } = useProductApi();
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [sortBy, setSortBy] = useState("default");
+
+  // Trigger filtering when search, category or sort change
+  useEffect(() => {
+    filterProducts(searchQuery, selectedCategory, sortBy);
+  }, [searchQuery, selectedCategory, sortBy, data]);
 
   if (error) return <h1>{error.message}</h1>;
+
+  const productsToShow = filteredProducts?.length ? filteredProducts : data;
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100 p-4 sm:p-8">
@@ -27,22 +38,29 @@ const ShopPage = () => {
           </div>
 
           <div className="text-sm text-neutral-400">
-            Showing{" "}
-            <span className="font-semibold text-white">{data?.length}</span>{" "}
-            products
+            Showing {productsToShow?.length} products
           </div>
         </div>
 
         {/* Search & Filter Component */}
-        <ProductFilter />
+        <ProductFilter
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+        />
 
         {/* Product Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {isPending
+          {isLoading
             ? Array.from({ length: 8 }).map((_, index) => (
-                <ProductSkeleton key={index} />
-              ))
-            : data?.map((val) => <ProductCard key={val.id} product={val} />)}
+              <ProductSkeleton key={index} />
+            ))
+            : productsToShow?.map((val) => (
+              <ProductCard key={val.id} product={val} />
+            ))}
         </div>
       </div>
     </div>

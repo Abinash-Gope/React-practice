@@ -31,7 +31,7 @@ const ProductFilter = ({
           type="text"
           placeholder="Search products, brands..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery && setSearchQuery(e.target.value)}
+          onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full bg-neutral-900 border border-neutral-800 rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-yellow-500 transition-colors"
         />
       </div>
@@ -40,9 +40,7 @@ const ProductFilter = ({
       <div className="flex items-center gap-2">
         <select
           value={selectedCategory}
-          onChange={(e) =>
-            setSelectedCategory && setSelectedCategory(e.target.value)
-          }
+          onChange={(e) => setSelectedCategory(e.target.value)}
           className="bg-neutral-900 border border-neutral-800 rounded-lg px-3 py-2 text-sm text-neutral-200 focus:outline-none focus:border-yellow-500 cursor-pointer"
         >
           <option value="all">All Categories</option>
@@ -54,7 +52,7 @@ const ProductFilter = ({
 
         <select
           value={sortBy}
-          onChange={(e) => setSortBy && setSortBy(e.target.value)}
+          onChange={(e) => setSortBy(e.target.value)}
           className="bg-neutral-900 border border-neutral-800 rounded-lg px-3 py-2 text-sm text-neutral-200 focus:outline-none focus:border-yellow-500 cursor-pointer"
         >
           <option value="default">Sort by: Default</option>
