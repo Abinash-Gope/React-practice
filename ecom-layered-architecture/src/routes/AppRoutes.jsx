@@ -1,8 +1,14 @@
-import React from 'react'
-import {RouterProvider} from "react-router"
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router";
 
 const AppRoutes = () => {
-  return <RouterProvider />
-}
+  let router = createBrowserRouter([
+    {
+      path: "/",
+    },
+  ]);
 
-export default AppRoutes
+  return <RouterProvider />;
+};
+
+export default AppRoutes;
